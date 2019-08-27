@@ -28,6 +28,13 @@ describe Oystercard do
     subject.top_up(50)
     expect(subject.deduct(10)).to eq(40)
   end
+
+  it "card with £60 should reduce to £0 when £60 is spent" do
+    subject.top_up(60)
+    expect(subject.deduct(60)).to eq(0)
+  end
+
+
 end
 
 
