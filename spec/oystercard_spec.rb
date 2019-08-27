@@ -9,7 +9,13 @@ describe Oystercard do
   it "expect new oystercard to have £10 on, when topped up with 10" do
     expect(subject.top_up(10)).to eq (10)
   end
+
+  it "expect oystercard with £20 to have £30 on, when topped up with 10" do
+    subject.top_up(20)
+    expect(subject.top_up(10)).to eq (30)
+  end
 end
+
 
 
 
