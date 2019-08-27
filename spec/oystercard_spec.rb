@@ -34,6 +34,10 @@ describe Oystercard do
     expect(subject.deduct(60)).to eq(0)
   end
 
+  it "when card touch_in card status is in_journey" do
+    expect(subject.touch_in).to eq (subject.in_journey)
+  end
+
 
 end
 
