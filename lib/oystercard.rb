@@ -20,15 +20,13 @@ class Oystercard
     raise "Balance limit is £#{BALANCE_LIMIT}" if value + @balance > BALANCE_LIMIT
   end
 
-  def deduct(value)
-    @balance = @balance - value
-  end
-
   def touch_in
+    check_minimum_fare
     @in_journey = true
   end
 
   def touch_out
+    charge_min_fare
     @in_journey
   end
 
@@ -38,6 +36,15 @@ class Oystercard
 
   def check_minimum_fare
     fail "Insufficent Funds" if @balance < MIN_FARE
+    true
   end
 
+  def charge_min_fare
+      @balance -= MIN_FARE
+  end
+
+  private
+  def deduct(value)
+    @balance -= value
+  end
 end

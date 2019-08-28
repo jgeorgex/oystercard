@@ -2,12 +2,14 @@ require 'oystercard'
 
 describe Oystercard do
 
+let(:topup_value) {10}
+
   it "new oystercard has default balance of 0" do
     expect(subject.balance).to eq (0)
   end
 
   it "expect new oystercard to have £10 on, when topped up with 10" do
-    expect(subject.top_up(10)).to eq (10)
+    expect(subject.top_up(topup_value)).to eq (topup_value)
   end
 
   it "expect oystercard with £20 to have £30 on, when topped up with 10" do
@@ -23,18 +25,9 @@ describe Oystercard do
     subject.top_up(20)
     expect{subject.top_up(80)}.to raise_error "Balance limit is £90"
   end
-
-  it "card with £50 should reduce to £40 when £10 is spent" do
-    subject.top_up(50)
-    expect(subject.deduct(10)).to eq(40)
-  end
-
-  it "card with £60 should reduce to £0 when £60 is spent" do
-    subject.top_up(60)
-    expect(subject.deduct(60)).to eq(0)
-  end
-
+  
   it "when card touch_in card status is in_journey" do
+    subject.top_up(5)
     expect(subject.touch_in).to eq (true)
   end
 
@@ -42,20 +35,11 @@ describe Oystercard do
     expect(subject.touch_out).to be (false)
   end
 
-  describe "testing minumum fare" do
-    it " tests that sufficient funds available for minium fare" do
-    
-      expect{ subject.check_minimum_fare }.to raise_error "Insufficent Funds"
-    end
+  it "In journey is true if Oystercard has been touched in" do
+    expect(subject.in_journey?).to eq (true)
+  end
+
+  it "reduces balance by minimum fair when touching out" do
+    expect{subject.touch_out}.to change{subject.balance}.by -Oystercard::MIN_FARE
   end
 end
-
-
-
-
-=begin
-create Oystercard
-create default balance
-irb create card then check balance
-
-=end
