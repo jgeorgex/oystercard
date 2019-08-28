@@ -25,7 +25,7 @@ let(:topup_value) {10}
     subject.top_up(20)
     expect{subject.top_up(80)}.to raise_error "Balance limit is £90"
   end
-  
+
   it "when card touch_in card status is in_journey" do
     subject.top_up(5)
     expect(subject.touch_in).to eq (true)
@@ -43,3 +43,7 @@ let(:topup_value) {10}
     expect{subject.touch_out}.to change{subject.balance}.by -Oystercard::MIN_FARE
   end
 end
+
+=begin
+"hello"
+=end
