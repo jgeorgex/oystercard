@@ -41,6 +41,13 @@ describe Oystercard do
   it "when card touch_out card status is false" do
     expect(subject.touch_out).to be (false)
   end
+
+  describe "testing minumum fare" do
+    it " tests that sufficient funds available for minium fare" do
+    
+      expect{ subject.check_minimum_fare }.to raise_error "Insufficent Funds"
+    end
+  end
 end
 
 
