@@ -2,6 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
 
+let(:station){ double :station }
 let(:topup_value) {10}
 
   it "new oystercard has default balance of 0" do
@@ -42,8 +43,16 @@ let(:topup_value) {10}
   it "reduces balance by minimum fair when touching out" do
     expect{subject.touch_out}.to change{subject.balance}.by -Oystercard::MIN_FARE
   end
-end
 
-=begin
-"hello"
-=end
+  it "store_station saves station where touched in" do
+    subject.top_up(10)
+    subject.touch_in(station)
+    expect(subject.entry_station).to eq station
+  end
+
+  it "checks minimum fare when touching in" do
+    subject.top_up(10)
+    expect(subject.check_minimum_fare).to eq true
+  end
+
+end
